@@ -1,0 +1,9 @@
+api/pyproject.toml.backup
+api/poetry.lock.backup
+*.backup
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+.venv
+venv/
