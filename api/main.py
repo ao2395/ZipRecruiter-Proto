@@ -3,7 +3,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from datetime import datetime
 from bson import ObjectId
-from mangum import Mangum
 
 try:
     # Relative imports for Vercel
