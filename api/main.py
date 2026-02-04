@@ -3,7 +3,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from datetime import datetime
 from bson import ObjectId
-from mangum import Mangum
 
 from database import connect_to_mongo, close_mongo_connection, get_database, settings
 from models import (
@@ -176,9 +175,6 @@ async def get_stats():
         total_responses=total_responses
     )
 
-
-# Vercel serverless handler
-handler = Mangum(app)
 
 if __name__ == "__main__":
     import uvicorn
