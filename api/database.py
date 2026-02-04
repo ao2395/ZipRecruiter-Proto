@@ -26,10 +26,11 @@ db = Database()
 
 async def connect_to_mongo():
     """Connect to MongoDB"""
-    print(f"Connecting to MongoDB at {settings.mongodb_url}")
-    db.client = AsyncIOMotorClient(settings.mongodb_url)
-    db.db = db.client[settings.database_name]
-    print(f"Connected to database: {settings.database_name}")
+    if db.client is None:
+        print(f"Connecting to MongoDB at {settings.mongodb_url}")
+        db.client = AsyncIOMotorClient(settings.mongodb_url)
+        db.db = db.client[settings.database_name]
+        print(f"Connected to database: {settings.database_name}")
 
 
 async def close_mongo_connection():
@@ -40,7 +41,9 @@ async def close_mongo_connection():
 
 
 def get_database() -> AsyncIOMotorDatabase:
-    """Get database instance"""
+    """Get database instance - lazy connect for serverless"""
     if db.db is None:
-        raise Exception("Database not initialized")
+        # For serverless, connect on first use
+        db.client = AsyncIOMotorClient(settings.mongodb_url)
+        db.db = db.client[settings.database_name]
     return db.db
