@@ -5,16 +5,30 @@ from datetime import datetime
 from bson import ObjectId
 from mangum import Mangum
 
-from database import connect_to_mongo, close_mongo_connection, get_database, settings
-from models import (
-    ParticipantCreate,
-    ParticipantResponse,
-    JobComparison,
-    ComparisonResponse,
-    ComparisonRecord,
-    Stats
-)
-from job_generator import generate_job_comparisons
+try:
+    # Relative imports for Vercel
+    from .database import connect_to_mongo, close_mongo_connection, get_database, settings
+    from .models import (
+        ParticipantCreate,
+        ParticipantResponse,
+        JobComparison,
+        ComparisonResponse,
+        ComparisonRecord,
+        Stats
+    )
+    from .job_generator import generate_job_comparisons
+except ImportError:
+    # Absolute imports for local development
+    from database import connect_to_mongo, close_mongo_connection, get_database, settings
+    from models import (
+        ParticipantCreate,
+        ParticipantResponse,
+        JobComparison,
+        ComparisonResponse,
+        ComparisonRecord,
+        Stats
+    )
+    from job_generator import generate_job_comparisons
 
 
 @asynccontextmanager
