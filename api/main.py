@@ -42,7 +42,8 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="ZipRecruiter Experiment API",
     version="1.0.0",
-    lifespan=lifespan
+    lifespan=lifespan,
+    root_path="/api"
 )
 
 # CORS middleware
