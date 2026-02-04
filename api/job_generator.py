@@ -1,5 +1,11 @@
 import random
-from models import JobListing
+
+try:
+    # Relative import for Vercel
+    from .models import JobListing
+except ImportError:
+    # Absolute import for local development
+    from models import JobListing
 
 
 COMPANY_DESCRIPTIONS = {
