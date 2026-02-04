@@ -1,6 +1,10 @@
+from fastapi import FastAPI
 from mangum import Mangum
-from .main import app
+from .main import app as original_app
+
+# Create a new app that mounts the original at /api
+app = FastAPI()
+app.mount("/api", original_app)
 
 # Mangum wraps the FastAPI app for AWS Lambda/Vercel
-# Use api_gateway_base_path to handle /api prefix
-handler = Mangum(app, lifespan="off", api_gateway_base_path="/api")
+handler = Mangum(app, lifespan="off")
