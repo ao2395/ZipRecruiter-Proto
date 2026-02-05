@@ -102,7 +102,7 @@ export function ChatbotInterface({ onComplete }: ChatbotInterfaceProps) {
   const [messages, setMessages] = useState<Message[]>([
     {
       type: 'bot',
-      content: "Hi! I'm your ZipRecruiter assistant. I'll ask you a few quick questions to help personalize your job search experience. This should only take a minute!",
+      content: "Hi! I’m [Assistant Name], the AI assistant for [Company Name]. I’ll ask you a few quick questions about the kind of roles and employers you’re looking for, which should take about three minutes. Based on your answers, I’ll be able to help identify roles that will be well suited to what you are looking for. Let’s get started. ",
     },
     {
       type: 'bot',
