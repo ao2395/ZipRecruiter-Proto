@@ -157,12 +157,14 @@ export function JobComparisonCard({
   };
 
   return (
-    <div className="grid md:grid-cols-2 gap-6 w-full max-w-6xl mx-auto items-stretch">
-      <div className="relative flex">
-        {renderJobCard(job1, 1)}
-      </div>
-      <div className="relative flex">
-        {renderJobCard(job2, 2)}
+    <div className="flex justify-center w-full">
+      <div className="grid md:grid-cols-2 gap-6 w-full max-w-6xl items-stretch px-4">
+        <div className="relative flex">
+          {renderJobCard(job1, 1)}
+        </div>
+        <div className="relative flex">
+          {renderJobCard(job2, 2)}
+        </div>
       </div>
     </div>
   );
