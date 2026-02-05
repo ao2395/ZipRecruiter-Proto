@@ -45,35 +45,44 @@ export default function ExperimentPage() {
     });
   }, [currentStep, participantId, comparisons.length, currentComparisonIndex]);
 
-  // Step 2: Handle questionnaire submission
+  // Step 2: Handle questionnaire submission (mock data - no API call)
   const handleQuestionnaireSubmit = async (data: ParticipantCreate) => {
     setIsLoading(true);
     setError(null);
 
-    try {
-      // Create participant
-      const response = await api.createParticipant(data);
-      setParticipantData(data);
-      setParticipantId(response.participant_id);
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 500));
 
-      // Fetch comparisons
-      const comparisonsData = await api.getComparisons(response.participant_id, 5);
-      setComparisons(comparisonsData);
+    // Mock participant ID
+    const mockParticipantId = 'demo-' + Date.now();
+    setParticipantData(data);
+    setParticipantId(mockParticipantId);
 
-      // Move to step 3 (comparisons)
-      setCurrentStep(3);
-    } catch (err) {
-      if (err instanceof APIError) {
-        setError(err.message);
-      } else {
-        setError('An unexpected error occurred. Please try again.');
+    // Mock comparisons data
+    const mockComparisons = Array.from({ length: 5 }, (_, i) => ({
+      id: i,
+      job1: {
+        company_description: "A technology company that develops software solutions.",
+        company_size: "100-500 employees",
+        compensation: "Market aligned",
+        location: "Remote",
+        dei_statement: "We are committed to fostering a diverse and inclusive workplace."
+      },
+      job2: {
+        company_description: "A business services firm that provides operational solutions.",
+        company_size: "500+ employees",
+        compensation: "Competitive for the market",
+        location: "Mostly in-office",
+        dei_statement: "No additional information provided."
       }
-    } finally {
-      setIsLoading(false);
-    }
+    }));
+    
+    setComparisons(mockComparisons);
+    setCurrentStep(3);
+    setIsLoading(false);
   };
 
-  // Step 3: Handle job selection
+  // Step 3: Handle job selection (no API call)
   const handleJobSelection = async (selectedJob: 1 | 2) => {
     if (!participantId) return;
 
@@ -86,34 +95,20 @@ export default function ExperimentPage() {
       comparisonId: comparison.id
     });
 
-    try {
-      // Submit response with complete job data
-      await api.submitResponse({
-        participant_id: participantId,
-        comparison_id: comparison.id,
-        selected_job: selectedJob,
-        job1: comparison.job1,
-        job2: comparison.job2,
-      });
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 300));
 
-      // Store response locally
-      addResponse(comparison.id, selectedJob);
+    // Store response locally
+    addResponse(comparison.id, selectedJob);
 
-      // Move to next comparison or complete
-      if (currentComparisonIndex < comparisons.length - 1) {
-        console.log('Moving to next comparison:', currentComparisonIndex + 1);
-        setCurrentComparisonIndex(currentComparisonIndex + 1);
-      } else {
-        console.log('All comparisons completed, redirecting');
-        // All comparisons completed
-        router.push('/experiment/complete');
-      }
-    } catch (err) {
-      if (err instanceof APIError) {
-        setError(err.message);
-      } else {
-        setError('Failed to submit response. Please try again.');
-      }
+    // Move to next comparison or complete
+    if (currentComparisonIndex < comparisons.length - 1) {
+      console.log('Moving to next comparison:', currentComparisonIndex + 1);
+      setCurrentComparisonIndex(currentComparisonIndex + 1);
+    } else {
+      console.log('All comparisons completed, redirecting');
+      // All comparisons completed
+      router.push('/experiment/complete');
     }
   };
 
