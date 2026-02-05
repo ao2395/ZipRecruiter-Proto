@@ -80,22 +80,23 @@ export function JobComparisonCard({
     }
 
     return (
-      <Card
-        style={{ minHeight: '550px' }}
-        className={`p-6 flex flex-col h-full ${animationClass} ${
-          isSelected
-            ? 'ring-4 ring-green-500 bg-green-50 shadow-2xl transition-[background-color,box-shadow,border-color] duration-300'
-            : isOther
-            ? 'transition-opacity duration-300'
-            : 'hover:shadow-xl hover:border-gray-900 transition-[box-shadow,border-color] duration-300'
-        }`}
-      >
-        {/* Selection Badge */}
-        {isSelected && (
-          <div className="absolute -top-3 -right-3 bg-green-500 text-white rounded-full p-2 shadow-lg transition-transform duration-200">
-            <Check className="w-6 h-6" />
-          </div>
-        )}
+      <div className="relative w-full">
+        <Card
+          style={{ minHeight: '550px' }}
+          className={`p-6 flex flex-col h-full ${animationClass} ${
+            isSelected
+              ? 'ring-4 ring-green-500 bg-green-50 shadow-2xl transition-[background-color,box-shadow,border-color] duration-300'
+              : isOther
+              ? 'transition-opacity duration-300'
+              : 'hover:shadow-xl hover:border-gray-900 transition-[box-shadow,border-color] duration-300'
+          }`}
+        >
+          {/* Selection Badge */}
+          {isSelected && (
+            <div className="absolute -top-3 -right-3 bg-green-500 text-white rounded-full p-2 shadow-lg transition-transform duration-200 z-10">
+              <Check className="w-6 h-6" />
+            </div>
+          )}
 
         <h3 className="text-lg font-semibold mb-4 text-gray-900 flex items-center gap-2">
           Option {jobNumber}
@@ -152,19 +153,16 @@ export function JobComparisonCard({
             `Select Option ${jobNumber}`
           )}
         </Button>
-      </Card>
+        </Card>
+      </div>
     );
   };
 
   return (
-    <div className="flex justify-center w-full">
-      <div className="grid md:grid-cols-2 gap-6 w-full max-w-6xl items-stretch px-4">
-        <div className="relative flex">
-          {renderJobCard(job1, 1)}
-        </div>
-        <div className="relative flex">
-          {renderJobCard(job2, 2)}
-        </div>
+    <div className="w-full flex justify-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl px-4">
+        {renderJobCard(job1, 1)}
+        {renderJobCard(job2, 2)}
       </div>
     </div>
   );
